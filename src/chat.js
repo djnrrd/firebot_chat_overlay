@@ -222,9 +222,16 @@ function connect() {
     // Connect to the local Websocket server and register the
     // callback functions
     let socket = new WebSocket(websocketURL);
-    // Inline function to log on open
+    // Inline function to register and log on open
     socket.onopen = function(e) {
         console.log("[open] Connection established");
+        socket.send(JSON.stringify({
+                "type": "invoke",
+                "id": 1,
+                "name": "subscribe-events",
+                "data": []
+            })
+        )
     };
     // Main Message handler function
     socket.onmessage = msg_handler;
