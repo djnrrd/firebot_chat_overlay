@@ -69,27 +69,31 @@ function clear_out_of_bounds() {
 }
 
 
-function delete_chat_messages(chat_msg) {
+function delete_user_messages(chat_msg) {
     // Clear all the chat messages, or all message from a user
-    if (chat_msg.username  == "") {
-        // the generic clear chat command has been used
-        document.getElementById("chat_overlay").innerHTML = "";
-    } else {
-        // A user has been banned or timed out
-        console.log(`Trying to remove messages for
-                    ${chat_msg["target-user-id"]}`);
-        let chats = document.getElementsByClassName
-        (chat_msg["target-user-id"]);
-        while (chats.length > 0) {
-            chats[0].parentNode.removeChild(chats[0]);
+    // A user has been banned or timed out
+    console.log(`Trying to remove messages for ${chat_msg.username}`);
+    let remove_chats = [];
+    let chats = document.getElementsByClassName("display_name");
+    for (let chat of chats) {
+        if (chat.textContent == chat_msg.username) {
+            remove_chats.push(chat.parentNode.parentNode);
         }
     }
+    for (let chat of remove_chats) {
+        chat.remove();
+    }
+}
+
+
+function clear_chat() {
+    document.getElementById("chat_overlay").innerHTML = "";
 }
 
 
 function delete_individual_message(chat_msg) {
     // Find a message and delete it
-    document.getElementById(chat_msg["target-msg-id"]).innerHTML = "";
+    document.getElementById(chat_msg.message_id).remove();
 }
 
 
@@ -105,13 +109,15 @@ function msg_handler(msg) {
             add_chat_msg(ws_msg.data);
             clear_out_of_bounds();
             break;
-        case "clearchat":
-            // Clear the entire chat log
-            delete_chat_messages(ws_msg);
+        case "custom-event:chat_overlay_clear":
+            clear_chat();
             break;
-        case "clearmsg":
+        case "custom-event:chat_overlay_clear_user":
+            delete_user_messages(ws_msg.data);
+            break;
+        case "custom-event:chat_overlay_clear_msg":
             // Delete an individual message
-            delete_individual_message(ws_msg);
+            delete_individual_message(ws_msg.data);
             break;
     };
 }
