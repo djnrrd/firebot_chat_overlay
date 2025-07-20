@@ -33,39 +33,26 @@ p {
     display: inline;
 }
 
-.user_details:after{
-    content: ': ';
-    font-family: Arial, sans-serif;
-    font-size: 16px;
-    color: white;
-    text-shadow: 1px 1px grey;
-}
-
-div.chat_badges{
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin-right: 5px;
-}
-
 .chat_badges {
     padding: 1px;
     margin: 1px;
     display: inline;
+    width: 15px;
+    height: 15px;
 }
 
 .display_name {
     display: inline;
-    font-size: 60%;
 }
 
 .pronoun_tag {
     display: inline;
-    font-size: 55%;
+    font-size: 80%;
     font-weight: bold;
     font-family: "Courier New", monospace;
     color: lightgray;
     margin-left: 5px;
+    margin-right: 5px;
 }
 
 .msg_text {
