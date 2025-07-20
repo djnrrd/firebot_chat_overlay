@@ -31,14 +31,11 @@ async function lookup_user_pronouns(user_login) {
     }
     // Get the user's pronouns from the service
     let data = await get(`users/${user_login}`);
+    let pronoun_id = "";
     if ( Array.isArray(data) ) {
         if( data.length == 1) {
             pronoun_id = data[0]['pronoun_id'];
-        } else {
-            pronoun_id = null;
         }
-    } else {
-        pronoun_id = null;
     }
     // Return the pronouns or a blank string if there were none
     if (pronoun_id in pronouns_lookup) {
