@@ -4,13 +4,13 @@ A twitch chat overlay for OBS, using Firebot as the information source.
 
 ## Setup
 
-Download the [release](https://github.com/djnrrd/firebot_chat_overlay/releases/tag/1.0) or clone this repository.  Extract the files to a safe location.
+Download the [release](https://github.com/djnrrd/firebot_chat_overlay/releases/tag/1.1) or clone this repository.  Extract the files to a safe location.
 
 Create a web browser overlay in OBS and point it to the location of the `chat.html` file
 
 ### Configuring Firebot Events
 
-Firebot will need to be configured to send events via its websocket server to the chat overlay.  Five events will need to be configured
+Firebot will need to be configured to send events via its websocket server to the chat overlay.  Five events will need to be configured and a firebotsetup file is included for convenience
 
 #### Chat Message
 
