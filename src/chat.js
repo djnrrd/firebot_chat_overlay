@@ -106,46 +106,42 @@ async function add_pronouns(chat_msg) {
 
 function add_chat_msg(chat_msg) {
     // Start with getting the overlay
-    overlay = document.getElementById('chat_overlay');
+    let overlay = document.getElementById('chat_overlay');
     // Create the overall containing div
-    msg_div = document.createElement('div');
+    let msg_div = document.createElement('div');
     msg_div.id = chat_msg.id;
     msg_div.className = `chat_message ${chat_msg.id}`;
-    user_div = document.createElement('div');
+    let user_div = document.createElement('div');
     user_div.className = 'user_details';
-    {% if config.badges_option == 'True' %}
     // Add badges
-    badges_div = document.createElement('div');
+    let badges_div = document.createElement('div');
     badges_div.className = 'chat_badges';
-    for (badge_url of chat_msg.badges) {
-        badge_img = document.createElement('img');
+    for (let badge_url of chat_msg.badges) {
+        let badge_img = document.createElement('img');
         badge_img.setAttribute('src', badge_url);
         badge_img.setAttribute('class', 'chat_badges');
         badges_div.appendChild(badge_img);
     }
     user_div.appendChild(badges_div);
-    {% endif %}
     // Add the Username
-    name_p = document.createElement('p');
+    let name_p = document.createElement('p');
     name_p.className = 'display_name';
     name_p.style = `color:${chat_msg.color}`;
-    name_text = document.createTextNode(`${chat_msg['display-name']}`);
+    let name_text = document.createTextNode(`${chat_msg['display-name']}`);
     name_p.appendChild(name_text);
     user_div.appendChild(name_p);
-    {% if config.pronoun_option == 'True' %}
     // Add placeholder for pronouns
-    pronoun_p = document.createElement('p');
+    let pronoun_p = document.createElement('p');
     pronoun_p.className = 'pronoun_tag';
     user_div.appendChild(pronoun_p);
-    {% endif %}
     msg_div.appendChild(user_div);
     // Main message text
-    text_div = document.createElement('div');
+    let text_div = document.createElement('div');
     text_div.className = 'msg_text';
-    text_p = document.createElement('p');
+    let text_p = document.createElement('p');
     if (chat_msg.msg_text.includes('ACTION')) {
         text_p.className = 'msg_text slash_me';
-        msg_text = chat_msg.msg_text.slice(7, -1);
+        let msg_text = chat_msg.msg_text.slice(7, -1);
         text_p.innerHTML = msg_text;
     }
     else {
