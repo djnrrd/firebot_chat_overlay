@@ -1,5 +1,28 @@
 # Firebot Chat Overlay
 
+
+## Configuring Firebot Events
+
+Firebot will need to be configured to send events via it's websocket server to the chat overlay.  Three events will need to be configured
+
+### Chat Message
+
+Create an event to trigger on "Chat Message (Twitch)" and give it a suitable name.  Add the effect "Send Custom WebSocket Event"
+
+For the "Event Name" variable, enter `chat_overlay_msg` and for the Event Data variable enter the following JSON
+
+
+```json
+{
+  "id": "$chatMessageId",
+  "badges": $userBadgeUrls,
+  "color": "$chatUserColor",
+  "display-name": "$userDisplayName",
+  "pronouns": "$pronouns[$userDisplayName, 0]",
+  "msg_text": "$chatMessage"
+}
+```
+
 ## Styling chat messages
 
 Chat messages are styled using the `chat_style.css` file, except for the chatter username, which uses the color provided by twitch.
