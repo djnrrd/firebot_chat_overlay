@@ -11,17 +11,47 @@ Create an event to trigger on "Chat Message (Twitch)" and give it a suitable nam
 
 For the "Event Name" variable, enter `chat_overlay_msg` and for the Event Data variable enter the following JSON
 
-
 ```json
 {
   "id": "$chatMessageId",
   "badges": $userBadgeUrls,
   "color": "$chatUserColor",
   "display-name": "$userDisplayName",
-  "pronouns": "$pronouns[$userDisplayName, 0]",
+  "pronouns": "$pronouns[$userDisplayName, 0, ]",
   "msg_text": "$chatMessage"
 }
 ```
+
+### Chat Cleared
+
+Create an event to trigger on "Chat Cleared (Twitch)" and give it a suitable name.  Add the effect "Send Custom WebSocket Event"
+
+For the "Event Name" variable, enter `chat_overlay_clear`, the Event Data variable can be left blank
+
+### Viewer Banned or Timed Out
+
+Create events to trigger on "Viewer Banned (Twitch)" and "Viewer Timeout (Twitch)" and give them a suitable name.  Add the effect "Send Custom WebSocket Event"
+
+For the "Event Name" variable, enter `chat_overlay_clear_user` and for the Event Data variable enter the following JSON
+
+```json
+{
+  "username": "$userDisplayName"
+}
+```
+
+### Chat message Deleted
+
+Create an event to trigger on "Chat Message Deleted (Twitch)" and give it a suitable name.  Add the effect "Send Custom WebSocket Event"
+
+For the "Event Name" variable, enter `chat_overlay_clear_msg` and for the Event Data variable enter the following JSON
+
+```json
+{
+  "message_id": "$chatMessageId"
+}
+```
+
 
 ## Styling chat messages
 
