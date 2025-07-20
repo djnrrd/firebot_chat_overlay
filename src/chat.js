@@ -158,7 +158,7 @@ function clear_out_of_bounds() {
     let chat_overlay = document.getElementById("chat_overlay");
     if (chat_overlay.getBoundingClientRect().y < 0) {
         console.log(chat_overlay.getBoundingClientRect().y);
-        chat_messages = chat_overlay.getElementsByClassName("chat_message");
+        let chat_messages = chat_overlay.getElementsByClassName("chat_message");
         chat_overlay.removeChild(chat_messages[0]);
         // Check again, just in case a couple of messages have tripped over
         clear_out_of_bounds();
@@ -169,13 +169,13 @@ function clear_out_of_bounds() {
 function delete_chat_messages(chat_msg) {
     // Clear all the chat messages, or all message from a user
     if (chat_msg.username  == "") {
-        // teh generic clear chat command has been used
+        // the generic clear chat command has been used
         document.getElementById("chat_overlay").innerHTML = "";
     } else {
-        // A user has been banned or timd out
+        // A user has been banned or timed out
         console.log(`Trying to remove messages for
                     ${chat_msg["target-user-id"]}`);
-        const chats = document.getElementsByClassName
+        let chats = document.getElementsByClassName
         (chat_msg["target-user-id"]);
         while (chats.length > 0) {
             chats[0].parentNode.removeChild(chats[0]);
