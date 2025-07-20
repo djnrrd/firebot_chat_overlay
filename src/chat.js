@@ -2,6 +2,21 @@ const websocketURL = "ws://localhost:7472";
 const debug = true;
 
 
+function replace_emotes(chat_msg) {
+    let return_str = chat_msg.msg_text;
+    for(let i = 0; i < chat_msg.emote_names.length; i++) {
+        let replace_txt = "";
+        if(chat_msg.animated_emote_urls[i] != "") {
+            replace_txt = `<img src="${chat_msg.animated_emote_urls[i]}">`;
+        } else {
+            replace_txt = `<img src="${chat_msg.emote_urls[i]}">`;
+        };
+        return_str = return_str.replace(chat_msg.emote_names[i], replace_txt);
+    };
+    return return_str;
+}
+
+
 function add_chat_msg(chat_msg) {
     // Start with getting the overlay
     let overlay = document.getElementById('chat_overlay');
@@ -39,15 +54,15 @@ function add_chat_msg(chat_msg) {
     let text_div = document.createElement('div');
     text_div.className = 'msg_text';
     let text_p = document.createElement('p');
-    if (chat_msg.msg_text.includes('ACTION')) {
+    let msg_text = replace_emotes(chat_msg);
+    if (msg_text.includes('ACTION')) {
         text_p.className = 'msg_text slash_me';
-        let msg_text = chat_msg.msg_text.slice(7, -1);
-        text_p.innerHTML = msg_text;
+        msg_text = msg_text.slice(7, -1);
     }
     else {
         text_p.className = 'msg_text';
-        text_p.innerHTML = `${chat_msg.msg_text}`;
     }
+    text_p.innerHTML = msg_text;
     text_div.appendChild(text_p);
     msg_div.appendChild(text_div);
     // Finally add the message to the overlay
