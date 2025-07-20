@@ -1,5 +1,5 @@
 body {
-    font-family: Arial;
+    font-family: Arial, sans-serif;
     font-size: 16px;
     color: white;
 }
@@ -35,7 +35,7 @@ p {
 
 .user_details:after{
     content: ': ';
-    font-family: Arial;
+    font-family: Arial, sans-serif;
     font-size: 16px;
     color: white;
     text-shadow: 1px 1px grey;
@@ -63,7 +63,7 @@ div.chat_badges{
     display: inline;
     font-size: 55%;
     font-weight: bold;
-    font-family: "Courier New";
+    font-family: "Courier New", monospace;
     color: lightgray;
     margin-left: 5px;
 }
