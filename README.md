@@ -18,8 +18,11 @@ For the "Event Name" variable, enter `chat_overlay_msg` and for the Event Data v
   "color": "$chatUserColor",
   "display-name": "$userDisplayName",
   "pronouns": "$pronouns[$userDisplayName, 0, ]",
-  "msg_text": "$chatMessage"
-}
+  "msg_text": "$chatMessage",
+  "emote_names": $chatMessageEmoteNames,
+  "emote_urls": $chatMessageEmoteUrls,
+  "animated_emote_urls": $chatMessageAnimatedEmoteUrls
+} 
 ```
 
 ### Chat Cleared
