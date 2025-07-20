@@ -1,3 +1,5 @@
+const websocketURL = "ws://localhost:7472";
+
 // Create Pronoun lookup objects
 const pronouns_lookup = {};
 const user_pronouns = {};
@@ -234,12 +236,14 @@ case "clearmsg":
 function connect() {
     // Connect to the local Websocket server and register the
     // callback functions
-    var socket = new WebSocket("ws://localhost:8080/chat_overlay/ws/");
+    let socket = new WebSocket(websocketURL);
+    // Inline function to log on open
     socket.onopen = function(e) {
         console.log("[open] Connection established");
     };
-    // Main Message handler
+    // Main Message handler function
     socket.onmessage = msg_handler;
+    // Inline function to deal with on close events and reconnect if not clean
     socket.onclose = function(event) {
         if (event.wasClean) {
             console.log(`[close] Connection closed cleanly,
@@ -253,6 +257,7 @@ function connect() {
             setTimeout(function() {connect();}, 5000);
         };
     };
+    // Inline function for logging erros
     socket.onerror = function(error) {
         console.log(`[error] ${error.message}`);
     };
