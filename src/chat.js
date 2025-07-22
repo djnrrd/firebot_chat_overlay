@@ -1,7 +1,7 @@
 const websocketURL = "ws://localhost:7472";
 const messageDisplayTime = 0; // Number of seconds to display a chat message before deleting it, set to 0 for permanent messages
 const messageFadeOut = false;
-const debug = true;
+const debug = false;
 
 
 function fade(element) {
