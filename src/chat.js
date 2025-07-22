@@ -1,12 +1,32 @@
 const websocketURL = "ws://localhost:7472";
 const messageDisplayTime = 3; // Number of seconds to display a chat message before deleting it, set to 0 for permanent messages
+const messageFadeOut = true;
 const debug = true;
+
+
+function fade(element) {
+    let opacity = Number(window.getComputedStyle(element).getPropertyValue("opacity"));
+    let timer = setInterval(function () {
+        if (opacity <= 0.1){
+            element.remove();
+            clearInterval(timer);
+        } else {
+            opacity = opacity - 0.1;
+            element.style.opacity = opacity;
+        }
+    }, 50);
+}
 
 async function timeout_message(chat_msg) {
     // wait for an amount of time before removing
     const timeout_period = messageDisplayTime * 1000;
     await new Promise(r => setTimeout(r, timeout_period));
-    document.getElementById(chat_msg.id).remove();
+    let msg_div = document.getElementById(chat_msg.id);
+    if (messageFadeOut === true) {
+        fade(msg_div);
+    } else {
+        msg_div.remove();
+    }
 }
 
 
