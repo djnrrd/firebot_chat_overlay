@@ -87,6 +87,8 @@ The following HTML represents an individual chat message, all items surrounded b
 
 ## Change Log
 
-* 1.1 
+* 1.2 
   * Added options to clear, and fade out messages after a delay.
   * Make messages consisting of only emotes use the next emote size up
+* 1.1
+  * Added firebotsetup file for easy import of event handlers
