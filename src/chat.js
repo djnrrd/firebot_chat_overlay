@@ -1,6 +1,6 @@
 const websocketURL = "ws://localhost:7472";
-const messageDisplayTime = 3; // Number of seconds to display a chat message before deleting it, set to 0 for permanent messages
-const messageFadeOut = true;
+const messageDisplayTime = 0; // Number of seconds to display a chat message before deleting it, set to 0 for permanent messages
+const messageFadeOut = false;
 const debug = true;
 
 
@@ -32,13 +32,20 @@ async function timeout_message(chat_msg) {
 
 function replace_emotes(chat_msg) {
     let return_str = chat_msg.msg_text;
+    let emote_text = chat_msg.emote_names.join("");
+    let msg_strip = return_str.replace(/ /g,"");
+    let just_emote = emote_text == msg_strip;
     for(let i = 0; i < chat_msg.emote_names.length; i++) {
-        let replace_txt = "";
+        let emote_url = "";
         if(chat_msg.animated_emote_urls[i] != "") {
-            replace_txt = `<img src="${chat_msg.animated_emote_urls[i]}">`;
+            emote_url = chat_msg.animated_emote_urls[i]
         } else {
-            replace_txt = `<img src="${chat_msg.emote_urls[i]}">`;
+            emote_url = chat_msg.emote_urls[i]
         };
+        if (just_emote) {
+            emote_url = emote_url.replace(/1\.0$/, '2.0');
+        }
+        let replace_txt = `<img src="${emote_url}">`;
         return_str = return_str.replace(chat_msg.emote_names[i], replace_txt);
     };
     return return_str;
