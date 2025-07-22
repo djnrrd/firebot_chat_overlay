@@ -1,5 +1,13 @@
 const websocketURL = "ws://localhost:7472";
+const messageDisplayTime = 3; // Number of seconds to display a chat message before deleting it, set to 0 for permanent messages
 const debug = true;
+
+async function timeout_message(chat_msg) {
+    // wait for an amount of time before removing
+    const timeout_period = messageDisplayTime * 1000;
+    await new Promise(r => setTimeout(r, timeout_period));
+    document.getElementById(chat_msg.id).remove();
+}
 
 
 function replace_emotes(chat_msg) {
@@ -123,6 +131,9 @@ function msg_handler(msg) {
         case "custom-event:chat_overlay_msg":
             add_chat_msg(ws_msg.data);
             clear_out_of_bounds();
+            if (messageDisplayTime > 0) {
+                timeout_message(ws_msg.data);
+            };
             break;
         case "custom-event:chat_overlay_clear":
             clear_chat();
