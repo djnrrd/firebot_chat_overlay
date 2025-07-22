@@ -1,16 +1,51 @@
 const websocketURL = "ws://localhost:7472";
-const debug = true;
+const messageDisplayTime = 0; // Number of seconds to display a chat message before deleting it, set to 0 for permanent messages
+const messageFadeOut = false;
+const debug = false;
+
+
+function fade(element) {
+    let opacity = Number(window.getComputedStyle(element).getPropertyValue("opacity"));
+    let timer = setInterval(function () {
+        if (opacity <= 0.1){
+            element.remove();
+            clearInterval(timer);
+        } else {
+            opacity = opacity - 0.1;
+            element.style.opacity = opacity;
+        }
+    }, 50);
+}
+
+async function timeout_message(chat_msg) {
+    // wait for an amount of time before removing
+    const timeout_period = messageDisplayTime * 1000;
+    await new Promise(r => setTimeout(r, timeout_period));
+    let msg_div = document.getElementById(chat_msg.id);
+    if (messageFadeOut === true) {
+        fade(msg_div);
+    } else {
+        msg_div.remove();
+    }
+}
 
 
 function replace_emotes(chat_msg) {
     let return_str = chat_msg.msg_text;
+    let emote_text = chat_msg.emote_names.join("");
+    let msg_strip = return_str.replace(/ /g,"");
+    let just_emote = emote_text == msg_strip;
     for(let i = 0; i < chat_msg.emote_names.length; i++) {
-        let replace_txt = "";
+        let emote_url = "";
         if(chat_msg.animated_emote_urls[i] != "") {
-            replace_txt = `<img src="${chat_msg.animated_emote_urls[i]}">`;
+            emote_url = chat_msg.animated_emote_urls[i]
         } else {
-            replace_txt = `<img src="${chat_msg.emote_urls[i]}">`;
+            emote_url = chat_msg.emote_urls[i]
         };
+        if (just_emote) {
+            emote_url = emote_url.replace(/1\.0$/, '2.0');
+        }
+        let replace_txt = `<img src="${emote_url}">`;
         return_str = return_str.replace(chat_msg.emote_names[i], replace_txt);
     };
     return return_str;
@@ -123,6 +158,9 @@ function msg_handler(msg) {
         case "custom-event:chat_overlay_msg":
             add_chat_msg(ws_msg.data);
             clear_out_of_bounds();
+            if (messageDisplayTime > 0) {
+                timeout_message(ws_msg.data);
+            };
             break;
         case "custom-event:chat_overlay_clear":
             clear_chat();

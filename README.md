@@ -84,3 +84,9 @@ The following HTML represents an individual chat message, all items surrounded b
     </div>
 </div>
 ```
+
+## Change Log
+
+* 1.1 
+  * Added options to clear, and fade out messages after a delay.
+  * Make messages consisting of only emotes use the next emote size up
